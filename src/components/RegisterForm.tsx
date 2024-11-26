@@ -1,15 +1,29 @@
 import Input from '@/ui/Input'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import AuthContext from '../context/AuthContext';
+
+type RegisterData = {
+    email: string;
+    password: string;
+    sessionToken: string;
+    sessionExpiry: number;
+}
 
 function RegisterForm() {
-    const [formData, setFormData] = useState({ email: '', password: '' });
+    const { register } = useContext(AuthContext);
+    const [formData, setFormData] = useState<RegisterData>({ email: '', password: '', sessionToken: '', sessionExpiry: 0 });
 
     const handleChange
      = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
+     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        register(formData);
+      };
+
   return (
-    <form className='bg-black px-[40px] py-[20px] max-w-[370px] w-[370px] rounded-xl mx-auto' onSubmit={handleChange}>
+    <form className='bg-black px-[40px] py-[20px] max-w-[370px] w-[370px] rounded-xl mx-auto' onSubmit={handleSubmit}>
         <h2 className='text-lg font-semibold text-center mb-4'>Register</h2>
         <div className="flex flex-col gap-[20px]">
             <Input placeholder='Email' name='email' handleChange={handleChange} />
