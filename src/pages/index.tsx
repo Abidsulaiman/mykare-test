@@ -13,7 +13,6 @@ export default function Home() {
       router.push('/login');
     }
   }, []);
-  // remove index page our base route is login or dashboard
 
   return (
     <div></div>

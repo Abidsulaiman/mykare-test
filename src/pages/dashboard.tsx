@@ -2,13 +2,13 @@ import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import AuthContext from '@/context/AuthContext';
 import Link from 'next/link';
+import UserList from '@/components/UserList';
 
 export default function Dashboard() {
   const router = useRouter();
   const { user, logout } = useContext(AuthContext);
 
   useEffect(() => {
-    console.log(user?.sessionExpiry)
     if (!user || (user && user.sessionToken && Date.now() >= Number(user.sessionExpiry))) {
       router.push('/login');
     }
@@ -31,7 +31,9 @@ export default function Dashboard() {
         </button>
       </nav>
       <main className='p-4 flex-grow'>
-        <h1>Welcome {user?.email}!!</h1>
+        <h1 className='text-2xl font-bold mb-4'>Welcome {user?.email}!!</h1>
+
+        {user?.email === 'admin' && <UserList />}
       </main>
       <footer className='bg-black text-white p-4 text-center'>
         <p>Copyright 2024</p>

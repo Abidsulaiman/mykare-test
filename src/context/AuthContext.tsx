@@ -9,11 +9,13 @@ interface User {
 
 export const AuthContext = createContext<{
   user: User | null;
+  users: User[] | [];
   login: (email: string, password: string) => boolean;
   register: (userData: User) => void;
   logout: () => void;
 }>({
   user: null,
+  users: [],
   login: () => false,
   register: () => {},
   logout: () => {},
@@ -21,10 +23,15 @@ export const AuthContext = createContext<{
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[] | []>([]);
 
   useEffect(() => {
-    // Check for current active user
     const activeUser = localStorage.getItem('activeUser');
+    const users = localStorage.getItem('users');
+
+    if(users?.length){
+      setUsers(JSON.parse(users));
+    }
     if (activeUser) {
       setUser(JSON.parse(activeUser));
     }
@@ -37,14 +44,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const matchedUser = users.find(u => u.email === email && u.password === password);
     
     if (matchedUser) {
-      // Add session data
       const sessionUser = {
         ...matchedUser,
         sessionToken: Math.random().toString(36).substring(2),
         sessionExpiry: Date.now() + 24 * 60 * 60 * 1000,
       };
       
-      // Update user in users array
       const updatedUsers = users.map(u => 
         u.email === email ? sessionUser : u
       );
@@ -61,7 +66,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const storedUsers = localStorage.getItem('users');
     const users: User[] = storedUsers ? JSON.parse(storedUsers) : [];
     
-    // Check if user already exists
     if (users.some(u => u.email === userData.email)) {
       alert('User already exists');
       return;
@@ -79,7 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, users, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
