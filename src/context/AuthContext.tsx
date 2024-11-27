@@ -21,9 +21,18 @@ export const AuthContext = createContext<{
   logout: () => {},
 });
 
+const initialData: User[] = [
+  {
+    email: 'admin',
+    password: 'admin',
+    sessionToken: '',
+    sessionExpiry: 0,
+  }
+]
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<User[] | []>([]);
+  const [users, setUsers] = useState<User[] | []>(initialData);
 
   useEffect(() => {
     const activeUser = localStorage.getItem('activeUser');
