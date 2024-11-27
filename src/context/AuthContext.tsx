@@ -21,22 +21,23 @@ export const AuthContext = createContext<{
   logout: () => {},
 });
 
-const initialData: User[] = [
-  {
-    email: 'admin',
-    password: 'admin',
-    sessionToken: '',
-    sessionExpiry: 0,
-  }
-]
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [users, setUsers] = useState<User[] | []>(initialData);
+  const [users, setUsers] = useState<User[] | []>([]);
 
   useEffect(() => {
     const activeUser = localStorage.getItem('activeUser');
     const users = localStorage.getItem('users');
+
+    if (!users) {
+      const adminUser = {
+        email: 'admin',
+        password: 'admin',
+        sessionToken: '',
+        sessionExpiry: 0,
+      };
+      localStorage.setItem('users', JSON.stringify([adminUser]));
+    }
 
     if(users?.length){
       setUsers(JSON.parse(users));
