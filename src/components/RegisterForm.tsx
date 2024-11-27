@@ -25,8 +25,8 @@ function RegisterForm() {
     <form className='bg-black px-[40px] py-[20px] max-w-[370px] w-[370px] rounded-xl mx-auto' onSubmit={handleSubmit}>
         <h2 className='text-lg font-semibold text-center mb-4'>Register</h2>
         <div className="flex flex-col gap-[20px]">
-            <Input placeholder='Email' name='email' handleChange={handleChange} />
-            <Input placeholder='Enter your password' name='password' handleChange={handleChange} />
+            <Input type='email' placeholder='Email' name='email' handleChange={handleChange} />
+            <Input type='password' placeholder='Enter your password' name='password' handleChange={handleChange} />
             <div className='flex items-center justify-between mt-[20px]'>
                 <Link href='/login' className='text-sm text-green-600 underline'>
                     Login here
