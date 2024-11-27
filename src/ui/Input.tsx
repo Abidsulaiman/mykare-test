@@ -1,6 +1,9 @@
 import React from 'react'
 
-function Input({handleChange, name, type, placeholder}: any) {
+function Input(
+  {handleChange, name, type, placeholder} : 
+  {handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void, name: string, type: string, placeholder: string}
+) {
   return (
     <div className='flex flex-col gap-[5px]'>
         <label htmlFor={name} className="text-sm font-medium mb-2 capitalize">{name}</label>

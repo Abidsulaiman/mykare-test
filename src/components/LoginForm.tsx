@@ -9,10 +9,9 @@ function LoginForm() {
     const router = useRouter();
     const [formData, setFormData] = useState({ email: '', password: '' });
 
-    const handleChange
-     = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (login(formData.email, formData.password)) {
           router.push('/');

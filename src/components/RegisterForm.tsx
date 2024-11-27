@@ -14,8 +14,7 @@ function RegisterForm() {
     const { register } = useContext(AuthContext);
     const [formData, setFormData] = useState<RegisterData>({ email: '', password: '', sessionToken: '', sessionExpiry: 0 });
 
-    const handleChange
-     = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
      const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
