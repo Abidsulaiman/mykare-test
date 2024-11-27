@@ -1,8 +1,12 @@
 import AuthContext from '@/context/AuthContext';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 function UserList() {
-    const { users } = useContext(AuthContext);
+    const { users, getUsers } = useContext(AuthContext);
+
+    useEffect(() => {
+        getUsers();
+    }, []);
 
   return (
     <table className='w-full border-collapse border border-slate-500'>

@@ -13,12 +13,14 @@ export const AuthContext = createContext<{
   login: (email: string, password: string) => boolean;
   register: (userData: User) => void;
   logout: () => void;
+  getUsers: () => User[];
 }>({
   user: null,
   users: [],
   login: () => false,
   register: () => {},
   logout: () => {},
+  getUsers: () => [],
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -46,6 +48,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setUser(JSON.parse(activeUser));
     }
   }, []);
+
+  const getUsers = (): User[] => {
+    const storedUsers = localStorage.getItem('users');
+    setUsers(storedUsers ? JSON.parse(storedUsers) : []);
+    return storedUsers ? JSON.parse(storedUsers) : [];
+  };
 
   const login = (email: string, password: string): boolean => {
     const storedUsers = localStorage.getItem('users');
@@ -94,7 +102,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, users, login, register, logout }}>
+    <AuthContext.Provider value={{ user, users, login, register, logout, getUsers }}>
       {children}
     </AuthContext.Provider>
   );
