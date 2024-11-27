@@ -3,7 +3,7 @@ import AuthContext from '@/context/AuthContext';
 import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
 
-function login() {
+function Login() {
   const router = useRouter();
   const { user } = useContext(AuthContext);
 
@@ -20,5 +20,5 @@ function login() {
   )
 }
 
-export default login
+export default Login
 
