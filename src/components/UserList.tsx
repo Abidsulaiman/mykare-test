@@ -17,7 +17,7 @@ function UserList() {
         </tr>
       </thead>
       <tbody>
-        {users.map((user, index) => (
+        {users?.map((user, index) => (
           <tr key={index}>
             <td className='p-2 border border-slate-500'>{index + 1}</td>
             <td className='p-2 border border-slate-500'>{user?.email}</td>
